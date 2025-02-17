@@ -1203,12 +1203,18 @@ fn computeNode(
     if (!is_empty_root) {
         if (name.len != 0 or estimated_total > 0) {
             if (estimated_total > 0) {
-                i += (std.fmt.bufPrint(buf[i..], "[{d}/{d}] ", .{ completed_items, estimated_total }) catch &.{}).len;
+                if (std.fmt.bufPrint(buf[i..], "[{d}/{d}] ", .{ completed_items, estimated_total })) |b| {
+                    i += b.len;
+                } else |_| {}
             } else if (completed_items != 0) {
-                i += (std.fmt.bufPrint(buf[i..], "[{d}] ", .{completed_items}) catch &.{}).len;
+                if (std.fmt.bufPrint(buf[i..], "[{d}] ", .{completed_items})) |b| {
+                    i += b.len;
+                } else |_| {}
             }
             if (name.len != 0) {
-                i += (std.fmt.bufPrint(buf[i..], "{s}", .{name}) catch &.{}).len;
+                if (std.fmt.bufPrint(buf[i..], "{s}", .{name})) |b| {
+                    i += b.len;
+                } else |_| {}
             }
         }
 

@@ -1307,10 +1307,10 @@ pub const Cpu = struct {
             return struct {
                 /// Populates only the feature bits specified.
                 pub fn featureSet(features: []const F) Set {
-                    var x = Set.empty;
-                    for (features) |feature| {
+                    var x: Set = .empty;
+                    if (@sizeOf(F) > 0) for (features) |feature| {
                         x.addFeature(@intFromEnum(feature));
-                    }
+                    };
                     return x;
                 }
 
