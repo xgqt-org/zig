@@ -41,7 +41,7 @@ pub const ArenaAllocator = struct {
         data: usize,
         node: std.SinglyLinkedList.Node = .{},
     };
-    const BufNode_alignment: mem.Alignment = .fromByteUnits(@alignOf(BufNode));
+    const BufNode_alignment: mem.Alignment = .of(BufNode);
 
     pub fn init(child_allocator: Allocator) ArenaAllocator {
         return (State{}).promote(child_allocator);
